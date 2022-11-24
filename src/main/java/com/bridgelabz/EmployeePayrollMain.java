@@ -11,6 +11,10 @@ public class EmployeePayrollMain {
         Connection con;
         String query
                 = "select * from employee_payroll";
+        String query1
+                = " update employee_payroll set name = 'Prathmesh' where id = 1;";
+        String query2="update employee_payroll set start = '22-08-21' where id = 5;";
+
         try {
             Class.forName("com.mysql.cj.jdbc.Driver"); // Driver name
             System.out.println("Driver Loaded !!!");
@@ -18,7 +22,12 @@ public class EmployeePayrollMain {
             con = DriverManager.getConnection(url, username, password);
             System.out.println("Connection Established successfully");
             Statement st = con.createStatement();
+            st.execute(query);
+            st.executeUpdate(query1);
+            st.executeUpdate(query2);
             boolean result = st.execute(query); // Execute query
+            System.out.println(result);
+
             ResultSet rs = st.getResultSet();
             if(result) {
                 while (rs.next()) {
@@ -32,8 +41,8 @@ public class EmployeePayrollMain {
                             = rs.getInt("salary"); // Retrieve name from db
                     System.out.println(salary); // Print result on console
 
-                    String startDate
-                            = rs.getString("start"); // Retrieve name from db
+                    Date startDate
+                            = rs.getDate("start"); // Retrieve name from db
                     System.out.println(startDate); // Print result on console
                 }
             } else {
